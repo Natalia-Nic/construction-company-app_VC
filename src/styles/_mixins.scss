@@ -1,0 +1,41 @@
+// src/styles/_mixins.scss
+// Центрирование
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// Карточки
+@mixin card-style {
+  background: white;
+  border-radius: $border-radius;
+  box-shadow: $shadow-sm;
+  border: 1px solid $border-color;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: $shadow-md;
+  }
+}
+
+// Кнопки
+@mixin button-style($bg-color, $text-color: white) {
+  background: $bg-color;
+  color: $text-color;
+  border: none;
+  padding: 10px 20px;
+  border-radius: $border-radius;
+  transition: all 0.3s ease;
+
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+}

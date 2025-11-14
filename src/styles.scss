@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+// src/styles.scss
+@import './styles/variables';
+@import './styles/mixins';
+@import './styles/global';
+
+// ВРЕМЕННО для проверки - потом удалим
+.test-class {
+  color: $primary-color; // Должен стать зеленым #2c5530
+  background: $light-gray;
+  padding: 20px;
+  border-radius: $border-radius;
+}

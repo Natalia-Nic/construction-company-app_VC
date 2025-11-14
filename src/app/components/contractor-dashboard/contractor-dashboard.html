@@ -1,0 +1,166 @@
+<!-- src/app/components/contractor-dashboard/contractor-dashboard.html -->
+<div class="contractor-dashboard">
+  <div class="container">
+    <!-- Заголовок и статистика -->
+    <div class="dashboard-header">
+      <h1 class="page-title">Панель управления подрядчика</h1>
+      
+      <!-- Статистика -->
+      <div class="stats-grid">
+        <div class="stat-card stat-total">
+          <div class="stat-number">{{ stats.total }}</div>
+          <div class="stat-label">Всего заявок</div>
+        </div>
+        <div class="stat-card stat-pending">
+          <div class="stat-number">{{ stats.pending }}</div>
+          <div class="stat-label">На рассмотрении</div>
+        </div>
+        <div class="stat-card stat-approved">
+          <div class="stat-number">{{ stats.approved }}</div>
+          <div class="stat-label">Одобрено</div>
+        </div>
+        <div class="stat-card stat-progress">
+          <div class="stat-number">{{ stats.inProgress }}</div>
+          <div class="stat-label">В работе</div>
+        </div>
+        <div class="stat-card stat-completed">
+          <div class="stat-number">{{ stats.completed }}</div>
+          <div class="stat-label">Завершено</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Фильтры и поиск -->
+    <div class="filters-section">
+      <div class="filters-row">
+        <div class="search-box">
+          <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            (input)="filterApplications()"
+            placeholder="Поиск по клиенту или проекту..."
+            class="search-input"
+          >
+          <span class="search-icon">🔍</span>
+        </div>
+        
+        <div class="status-filters">
+          <select 
+            [(ngModel)]="statusFilter" 
+            (change)="filterApplications()"
+            class="status-select"
+          >
+            <option value="all">Все статусы</option>
+            <option value="Pending">На рассмотрении</option>
+            <option value="Approved">Одобрено</option>
+            <option value="InProgress">В работе</option>
+            <option value="Completed">Завершено</option>
+            <option value="Rejected">Отклонено</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Список заявок -->
+    <div class="applications-table">
+      <div *ngFor="let application of filteredApplications" class="application-row">
+        
+        <!-- Основная информация -->
+        <div class="application-main">
+          <div class="client-info">
+            <h4 class="client-name">{{ application.client?.fullName }}</h4>
+            <div class="client-contacts">
+              <span class="contact-email">{{ application.client?.email }}</span>
+              <span class="contact-phone">{{ application.client?.phone }}</span>
+            </div>
+          </div>
+
+          <div class="project-info">
+            <h4 class="project-name">{{ application.project?.name }}</h4>
+            <div class="project-price">{{ application.project?.price | number:'1.0-0' }} ₽</div>
+          </div>
+
+          <div class="application-meta">
+            <div class="application-date">
+              Подана: {{ formatDate(application.createdAt) }}
+            </div>
+            <div class="status-badge" [class]="'status-' + getStatusInfo(application.status).color">
+              {{ getStatusInfo(application.status).label }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Комментарии -->
+        <div class="comments-section">
+          <div class="comment-block" *ngIf="application.clientComments">
+            <strong>Комментарий клиента:</strong>
+            <p>{{ application.clientComments }}</p>
+          </div>
+          
+          <div class="comment-block" *ngIf="application.contractorComments">
+            <strong>Ваш комментарий:</strong>
+            <p>{{ application.contractorComments }}</p>
+          </div>
+
+          <!-- Форма для комментария подрядчика -->
+          <div class="contractor-comment-form">
+            <textarea 
+              #commentInput
+              placeholder="Добавить комментарий для клиента..."
+              rows="2"
+              class="comment-textarea"
+            ></textarea>
+            <button 
+              (click)="addContractorComments(application, commentInput.value); commentInput.value = ''"
+              class="btn btn-primary btn-sm"
+            >
+              Добавить комментарий
+            </button>
+          </div>
+        </div>
+
+        <!-- Действия подрядчика -->
+        <div class="contractor-actions">
+          <div class="action-buttons">
+            <button 
+              *ngIf="application.status === 'Pending'"
+              (click)="updateApplicationStatus(application, 'Approved')"
+              class="btn btn-success btn-sm"
+            >
+              ✅ Одобрить
+            </button>
+            
+            <button 
+              *ngIf="application.status === 'Pending'"
+              (click)="updateApplicationStatus(application, 'Rejected')"
+              class="btn btn-danger btn-sm"
+            >
+              ❌ Отклонить
+            </button>
+            
+            <button 
+              *ngIf="application.status === 'Approved'"
+              (click)="updateApplicationStatus(application, 'InProgress')"
+              class="btn btn-info btn-sm"
+            >
+              🚀 В работу
+            </button>
+            
+            <button 
+              *ngIf="application.status === 'InProgress'"
+              (click)="updateApplicationStatus(application, 'Completed')"
+              class="btn btn-primary btn-sm"
+            >
+              ✅ Завершить
+            </button>
+          </div>
+
+          <!-- История статусов -->
+          <div class="status-history">
+            <small>Обновлено: {{ formatDate(application.updatedAt) }}</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

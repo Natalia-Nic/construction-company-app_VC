@@ -1,12 +1,16 @@
-import { Component, signal } from '@angular/core';
+// src/app/app.ts
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+import { Header } from './shared/header/header';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, Header], // ← ProjectList УБРАН отсюда!
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('construction-company-app');
+  title = 'construction-company-app';
 }

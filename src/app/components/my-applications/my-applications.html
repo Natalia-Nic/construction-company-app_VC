@@ -1,0 +1,77 @@
+<!-- src/app/components/my-applications/my-applications.html -->
+<div class="my-applications">
+  <div class="container">
+    <h2 class="page-title">Мои заявки</h2>
+
+    <!-- Индикатор загрузки -->
+    <div *ngIf="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Загрузка заявок...</p>
+    </div>
+
+    <!-- Сообщение об ошибке -->
+    <div *ngIf="error && !loading" class="error-message">
+      {{ error }}
+    </div>
+
+    <!-- Список заявок -->
+    <div *ngIf="!loading && !error" class="applications-list">
+      
+      <!-- Сообщение если заявок нет -->
+      <div *ngIf="applications.length === 0" class="no-applications">
+        <p>У вас пока нет заявок</p>
+        <a routerLink="/" class="btn btn-primary">Выбрать проект</a>
+      </div>
+
+      <!-- Карточка заявки -->
+      <div *ngFor="let application of applications" class="application-card">
+        
+        <!-- Заголовок заявки -->
+        <div class="application-header">
+          <h3 class="project-name">{{ application.project?.name || 'Проект #' + application.projectId }}</h3>
+          <span class="status-badge" [class]="'status-' + getStatusInfo(application.status).color">
+            {{ getStatusInfo(application.status).label }}
+          </span>
+        </div>
+
+        <!-- Детали заявки -->
+        <div class="application-details">
+          
+          <!-- Дата подачи -->
+          <div class="detail-row">
+            <span class="label">Дата подачи:</span>
+            <span class="value">{{ formatDate(application.createdAt) }}</span>
+          </div>
+          
+          <!-- Стоимость проекта (ИСПРАВЛЕНА ОШИБКА) -->
+          <div class="detail-row" *ngIf="application.project && application.project.price">
+            <span class="label">Стоимость:</span>
+            <span class="value">{{ application.project.price | number:'1.0-0' }} ₽</span>
+          </div>
+
+          <!-- Комментарии клиента -->
+          <div class="detail-row" *ngIf="application.clientComments">
+            <span class="label">Ваши комментарии:</span>
+            <span class="value">{{ application.clientComments }}</span>
+          </div>
+
+          <!-- Комментарии подрядчика -->
+          <div class="detail-row" *ngIf="application.contractorComments">
+            <span class="label">Комментарии подрядчика:</span>
+            <span class="value">{{ application.contractorComments }}</span>
+          </div>
+        </div>
+
+        <!-- Кнопки действий -->
+        <div class="application-actions">
+          <button class="btn btn-secondary" *ngIf="application.status === 'Pending'">
+            Отменить заявку
+          </button>
+          <button class="btn btn-primary" *ngIf="application.status === 'Approved'">
+            Оплатить
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<app-application-form 
+  *ngIf="showApplicationForm && selectedProject"
+  [project]="selectedProject"
+  (submitted)="onApplicationSubmitted()"
+  (cancelled)="onApplicationCancelled()">
+</app-application-form>
+<div class="project-list">
+  <div class="container">
+    <h2 class="page-title">Каталог проектов домов</h2>
+    
+    <!-- Индикатор загрузки -->
+    <div *ngIf="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Загрузка проектов...</p>
+    </div>
+
+    <!-- Сообщение об ошибке -->
+    <div *ngIf="error && !loading" class="error-message">
+      {{ error }}
+    </div>
+
+    <!-- Сетка проектов -->
+    <div *ngIf="!loading && !error" class="projects-grid">
+      <div *ngFor="let project of projects" class="project-card">
+        <div class="project-image">
+          <img [src]="project.imageUrl" [alt]="project.name" class="image">
+          <div class="project-price">{{ formatPrice(project.price) }}</div>
+        </div>
+        
+        <div class="project-content">
+          <h3 class="project-title">{{ project.name }}</h3>
+          <p class="project-description">{{ project.description }}</p>
+          
+          <div class="project-specs">
+            <div class="spec-item">
+              <span class="spec-label">Площадь:</span>
+              <span class="spec-value">{{ project.area }} м²</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Спальни:</span>
+              <span class="spec-value">{{ project.bedrooms }}</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">Санузлы:</span>
+              <span class="spec-value">{{ project.bathrooms }}</span>
+            </div>
+          </div>
+
+          <div class="project-actions">
+            <button class="btn btn-primary" (click)="selectProject(project)">
+              Выбрать проект
+            </button>
+            <button class="btn btn-secondary" (click)="showDetails(project)">
+              Подробнее
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Если проектов нет -->
+    <div *ngIf="!loading && !error && projects.length === 0" class="no-projects">
+      <p>Проекты временно отсутствуют</p>
+    </div>
+  </div>
+</div>

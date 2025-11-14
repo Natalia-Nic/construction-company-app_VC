@@ -1,0 +1,57 @@
+<!-- src/app/components/application-form/application-form.html -->
+<div class="application-form-overlay">
+  <div class="application-form-modal">
+    <div class="form-header">
+      <h2>Оставить заявку на проект</h2>
+      <button class="close-btn" (click)="cancel()">×</button>
+    </div>
+
+    <!-- Информация о проекте -->
+    <div class="project-info" *ngIf="project">
+      <h3>{{ project.name }}</h3>
+      <p class="project-price">{{ project.price | number:'1.0-0' }} ₽</p>
+      <p class="project-specs">
+        Площадь: {{ project.area }}м² • 
+        Спальни: {{ project.bedrooms }} • 
+        Санузлы: {{ project.bathrooms }}
+      </p>
+    </div>
+
+    <!-- Форма заявки -->
+    <form (ngSubmit)="submitApplication()" class="application-form">
+      <div class="form-group">
+        <label for="comments">Дополнительные пожелания:</label>
+        <textarea
+          id="comments"
+          [(ngModel)]="clientComments"
+          name="comments"
+          placeholder="Расскажите о ваших пожеланиях, сроках, бюджете..."
+          rows="4"
+        ></textarea>
+      </div>
+
+      <!-- Сообщение об ошибке -->
+      <div *ngIf="error" class="error-message">
+        {{ error }}
+      </div>
+
+      <!-- Кнопки -->
+      <div class="form-actions">
+        <button 
+          type="button" 
+          class="btn btn-secondary" 
+          (click)="cancel()"
+          [disabled]="isLoading">
+          Отмена
+        </button>
+        <button 
+          type="submit" 
+          class="btn btn-primary" 
+          [disabled]="isLoading">
+          <span *ngIf="isLoading">Отправка...</span>
+          <span *ngIf="!isLoading">Отправить заявку</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

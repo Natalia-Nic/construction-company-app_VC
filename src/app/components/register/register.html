@@ -1,0 +1,106 @@
+<!-- src/app/components/register/register.html -->
+<div class="register-container">
+  <div class="register-card">
+    <div class="register-header">
+      <h1>Регистрация</h1>
+      <p>Создайте новый аккаунт</p>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="register-form">
+      
+      <div class="form-group">
+        <label for="fullName">ФИО</label>
+        <input
+          type="text"
+          id="fullName"
+          [(ngModel)]="registerData.fullName"
+          name="fullName"
+          placeholder="Введите ваше ФИО"
+          required
+          class="form-input"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="registerData.email"
+          name="email"
+          placeholder="Введите ваш email"
+          required
+          class="form-input"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Телефон</label>
+        <input
+          type="tel"
+          id="phone"
+          [(ngModel)]="registerData.phone"
+          name="phone"
+          placeholder="+7 (999) 123-45-67"
+          class="form-input"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="password">Пароль</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="registerData.password"
+          name="password"
+          placeholder="Минимум 6 символов"
+          required
+          class="form-input"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Подтвердите пароль</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          placeholder="Повторите пароль"
+          required
+          class="form-input"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="role">Роль</label>
+        <select
+          id="role"
+          [(ngModel)]="registerData.role"
+          name="role"
+          class="form-input"
+        >
+          <option value="Client">Клиент</option>
+          <option value="Contractor">Подрядчик</option>
+        </select>
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <button 
+        type="submit" 
+        class="btn btn-primary btn-register"
+        [disabled]="isLoading"
+      >
+        <span *ngIf="!isLoading">Зарегистрироваться</span>
+        <span *ngIf="isLoading">Регистрация...</span>
+      </button>
+
+      <div class="register-footer">
+        <p>Уже есть аккаунт? <a routerLink="/login" class="link">Войти</a></p>
+      </div>
+    </form>
+  </div>
+</div>

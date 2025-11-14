@@ -1,0 +1,26 @@
+<!-- src/app/shared/header/header.html -->
+<header class="header">
+  <div class="container">
+    <div class="header-content">
+      <!-- Логотип и название -->
+      <div class="header-brand">
+        <h1 class="logo">🏗️ Строительная компания</h1>
+      </div>
+
+      <!-- Навигация -->
+      <nav class="header-nav">
+        <a routerLink="/" class="nav-link">Главная</a>
+        <a routerLink="/projects" class="nav-link">Проекты</a>
+        <a routerLink="/my-applications" class="nav-link">Мои заявки</a>
+        <a routerLink="/contractor" class="nav-link">Панель подрядчика</a> <!-- ← ДОБАВИЛИ ЭТУ СТРОКУ -->
+      </nav>
+
+      <!-- Информация пользователя -->
+      <div class="user-info">
+        <span class="user-name">Иван Петров</span>
+        <span class="user-role">Клиент</span>
+        <span class="user-type">ИП</span>
+      </div>
+    </div>
+  </div>
+</header>

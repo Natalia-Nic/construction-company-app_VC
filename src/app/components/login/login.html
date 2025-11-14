@@ -1,0 +1,75 @@
+<<!-- src/app/components/login/login.html -->
+<div class="login-container">
+  <div class="login-card">
+    <!-- Заголовок -->
+    <div class="login-header">
+      <h1>Вход в систему</h1>
+      <p>Войдите в свой аккаунт</p>
+    </div>
+
+    <!-- Форма входа -->
+    <form (ngSubmit)="onSubmit()" class="login-form">
+      
+      <!-- Поле Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          [(ngModel)]="loginData.email"
+          name="email"
+          placeholder="Введите ваш email"
+          required
+          class="form-input"
+        >
+      </div>
+
+      <!-- Поле Пароль -->
+      <div class="form-group">
+        <label for="password">Пароль</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="loginData.password"
+          name="password"
+          placeholder="Введите ваш пароль"
+          required
+          class="form-input"
+        >
+      </div>
+
+      <!-- Сообщение об ошибке -->
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Кнопка входа -->
+      <button 
+        type="submit" 
+        class="btn btn-primary btn-login"
+        [disabled]="isLoading"
+      >
+        <span *ngIf="!isLoading">Войти</span>
+        <span *ngIf="isLoading">Вход...</span>
+      </button>
+
+      <!-- Ссылка на регистрацию -->
+      <div class="login-footer">
+        <p>Нет аккаунта? <a routerLink="/register" class="link">Зарегистрироваться</a></p>
+      </div>
+
+      <!-- Быстрый вход для тестирования (можно удалить) -->
+      <div class="quick-login">
+        <p>Быстрый вход для тестирования:</p>
+        <div class="quick-buttons">
+          <button type="button" (click)="quickLogin('client')" class="btn btn-secondary btn-sm">
+            Клиент
+          </button>
+          <button type="button" (click)="quickLogin('contractor')" class="btn btn-secondary btn-sm">
+            Подрядчик
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
