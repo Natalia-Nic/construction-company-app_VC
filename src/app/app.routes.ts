@@ -4,7 +4,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
 import { ProjectList } from './components/project-list/project-list';
 import { MyApplications } from './components/my-applications/my-applications';
-import { ContractorDashboard } from './components/contractor-dashboard/contractor-dashboard';
+import { ContractorPanel } from './components/contractor-panel/contractor-panel'; // ИЗМЕНИЛ ИМПОРТ
 import { Login } from './components/login/login';
 import { Register } from './components/register/register';
 
@@ -15,10 +15,10 @@ export const routes: Routes = [
   { path: 'projects', component: ProjectList, canActivate: [AuthGuard] },
   { path: 'my-applications', component: MyApplications, canActivate: [AuthGuard] },
   { 
-    path: 'contractor', 
-    component: ContractorDashboard,
-    canActivate: [AuthGuard, RoleGuard],
-    data: { expectedRole: 'Contractor' } 
-  },
+  path: 'contractor', 
+  component: ContractorPanel,
+  canActivate: [AuthGuard], // УБРАЛ RoleGuard
+  data: { expectedRole: 'Contractor' } 
+},
   { path: '**', redirectTo: '' }
 ];

@@ -1,0 +1,142 @@
+<!-- src/app/components/contractor-panel/contractor-panel.html -->
+<div class="contractor-panel">
+  <div class="container">
+    <h2 class="page-title">Панель подрядчика</h2>
+
+    <!-- Индикатор загрузки -->
+    <div *ngIf="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Загрузка заявок...</p>
+    </div>
+
+    <!-- Сообщение об ошибке -->
+    <div *ngIf="error && !loading" class="error-message">
+      {{ error }}
+    </div>
+
+    <!-- Статистика -->
+    <div *ngIf="!loading && !error" class="stats">
+      <div class="stat-card">
+        <h3>Всего заявок</h3>
+        <span class="stat-number">{{ applications.length }}</span>
+      </div>
+      <div class="stat-card">
+        <h3>На рассмотрении</h3>
+        <span class="stat-number">{{ getApplicationsByStatus('Pending').length }}</span>
+      </div>
+      <div class="stat-card">
+        <h3>В работе</h3>
+        <span class="stat-number">{{ getApplicationsByStatus('InProgress').length }}</span>
+      </div>
+      <div class="stat-card">
+        <h3>Договор отправлен</h3>
+        <span class="stat-number">{{ getApplicationsByStatus('ContractSent').length }}</span>
+      </div>
+      <div class="stat-card">
+        <h3>Оплачено</h3>
+        <span class="stat-number">{{ getApplicationsByStatus('Approved').length }}</span>
+      </div>
+      <div class="stat-card">
+        <h3>Завершено</h3>
+        <span class="stat-number">{{ getApplicationsByStatus('Completed').length }}</span>
+      </div>
+    </div>
+
+    <!-- Список заявок -->
+    <div *ngIf="!loading && !error" class="applications-list">
+      
+      <!-- Сообщение если заявок нет -->
+      <div *ngIf="applications.length === 0" class="no-applications">
+        <p>Нет заявок</p>
+      </div>
+
+      <!-- Карточка заявки -->
+      <div *ngFor="let application of applications" class="application-card">
+        
+        <!-- Заголовок заявки -->
+        <div class="application-header">
+          <h3 class="project-name">{{ application.project?.name || 'Проект #' + application.projectId }}</h3>
+          <span class="status-badge" [class]="'status-' + getStatusInfo(application.status).color">
+            {{ getStatusInfo(application.status).label }}
+          </span>
+        </div>
+
+        <!-- Детали заявки -->
+        <div class="application-details">
+          
+          <!-- Клиент -->
+          <div class="detail-row" *ngIf="application.client">
+            <span class="label">Клиент:</span>
+            <span class="value">{{ application.client.fullName }}</span>
+          </div>
+
+          <!-- Контакты клиента -->
+          <div class="detail-row" *ngIf="application.client">
+            <span class="label">Контакты:</span>
+            <span class="value">{{ application.client.email }}, {{ application.client.phone }}</span>
+          </div>
+
+          <!-- Дата подачи -->
+          <div class="detail-row">
+            <span class="label">Дата подачи:</span>
+            <span class="value">{{ formatDate(application.createdAt) }}</span>
+          </div>
+          
+          <!-- Стоимость проекта -->
+          <div class="detail-row" *ngIf="application.project && application.project.price">
+            <span class="label">Стоимость:</span>
+            <span class="value">{{ application.project.price | number:'1.0-0' }} ₽</span>
+          </div>
+
+          <!-- Комментарии клиента -->
+          <div class="detail-row" *ngIf="application.clientComments">
+            <span class="label">Комментарии клиента:</span>
+            <span class="value">{{ application.clientComments }}</span>
+          </div>
+
+          <!-- Комментарии подрядчика -->
+          <div class="detail-row" *ngIf="application.contractorComments">
+            <span class="label">Ваши комментарии:</span>
+            <span class="value">{{ application.contractorComments }}</span>
+          </div>
+        </div>
+
+        <!-- Кнопки действий для подрядчика -->
+        <div class="application-actions">
+          <button class="btn btn-warning" 
+                  *ngIf="isStatus(application, 'Pending')"
+                  (click)="takeToWork(application.id)">
+            🏗️ Взять в работу
+          </button>
+          
+          <!-- Отправить договор -->
+          <button class="btn btn-primary" 
+                  *ngIf="isStatus(application, 'InProgress')"
+                  (click)="sendContract(application.id)">
+            📄 Отправить договор
+          </button>
+          
+          <!-- Информация о статусе договора -->
+          <span class="status-info contract-sent" *ngIf="isStatus(application, 'ContractSent')">
+            📄 Ожидает оплаты клиентом
+          </span>
+
+          <!-- Завершить для Approved (ОПЛАЧЕНО) -->
+          <button class="btn btn-success" 
+                  *ngIf="isStatus(application, 'Approved')"
+                  (click)="completeApplication(application.id)">
+            ✅ Завершить строительство
+          </button>
+
+          <span class="status-info completed" *ngIf="isStatus(application, 'Completed')">
+            ✅ Заявка завершена
+          </span>
+
+          <span class="status-info" *ngIf="isStatus(application, 'Rejected')">
+            ❌ Заявка отклонена
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

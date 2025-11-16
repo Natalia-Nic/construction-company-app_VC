@@ -1,0 +1,63 @@
+<div class="admin-panel">
+  <div class="container">
+    <h2 class="page-title">Админ панель</h2>
+
+    <div *ngIf="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Загрузка пользователей...</p>
+    </div>
+
+    <div *ngIf="error && !loading" class="error-message">
+      {{ error }}
+    </div>
+
+    <div *ngIf="!loading && !error" class="users-list">
+      
+      <div *ngIf="users.length === 0" class="no-users">
+        <p>Нет пользователей</p>
+      </div>
+
+      <div *ngFor="let user of users" class="user-card">
+        
+        <div class="user-header">
+          <h3 class="user-name">{{ user.fullName }}</h3>
+          <span class="user-role-badge" [class]="'role-' + user.role.toLowerCase()">
+            {{ getUserRoleLabel(user.role) }}
+          </span>
+        </div>
+
+        <div class="user-details">
+          
+          <div class="detail-row">
+            <span class="label">Email:</span>
+            <span class="value">{{ user.email }}</span>
+          </div>
+
+          <div class="detail-row">
+            <span class="label">Телефон:</span>
+            <span class="value">{{ user.phone || 'Не указан' }}</span>
+          </div>
+
+          <div class="detail-row">
+            <span class="label">Дата регистрации:</span>
+            <span class="value">{{ formatDate(user.createdAt) }}</span>
+          </div>
+
+          <div class="detail-row">
+            <span class="label">Текущая роль:</span>
+            <span class="value">{{ getUserRoleLabel(user.role) }}</span>
+          </div>
+        </div>
+
+        <div class="user-actions">
+          <label>Изменить роль:</label>
+          <select #roleSelect (change)="changeUserRole(user.id, roleSelect.value)" class="role-select">
+            <option value="Client" [selected]="user.role === 'Client'">Клиент</option>
+            <option value="Contractor" [selected]="user.role === 'Contractor'">Подрядчик</option>
+            <option value="Admin" [selected]="user.role === 'Admin'">Администратор</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

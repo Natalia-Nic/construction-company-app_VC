@@ -6,9 +6,9 @@
  */
 export interface Application {
   id: number;                           // Уникальный идентификатор заявки
-  clientId: number;                     // ID клиента, который подал заявку
+  clientId: string;                     // ID клиента, который подал заявку - ИСПРАВЛЕНО: number → string
   projectId: number;                    // ID выбранного проекта
-  status: 'Pending' | 'Approved' | 'Rejected' | 'InProgress' | 'Completed';  // Статус заявки
+  status: 'Pending' | 'Approved' | 'Rejected' | 'InProgress' | 'Completed' | 'ContractSent';  // Статус заявки
   createdAt: Date;                      // Дата подачи заявки
   updatedAt: Date;                      // Дата последнего обновления
   clientComments?: string;              // Комментарии клиента при подаче заявки
@@ -43,5 +43,6 @@ export const ApplicationStatus = {
   Approved: { value: 'Approved', label: 'Одобрена', color: 'success' },
   Rejected: { value: 'Rejected', label: 'Отклонена', color: 'error' },
   InProgress: { value: 'InProgress', label: 'В работе', color: 'info' },
-  Completed: { value: 'Completed', label: 'Завершена', color: 'primary' }
+  Completed: { value: 'Completed', label: 'Завершена', color: 'primary' },
+  ContractSent: { value: 'ContractSent', label: 'Договор отправлен', color: 'primary' }
 } as const;

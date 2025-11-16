@@ -1,17 +1,16 @@
-// src/app/components/my-applications/my-applications.ts
+// src/app/components/contractor-panel/contractor-panel.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApplicationService } from '../../services/application';
 import { Application, ApplicationStatus } from '../../models/application.model';
 
 @Component({
-  selector: 'app-my-applications',
-  standalone: true,
+  selector: 'app-contractor-panel',
   imports: [CommonModule],
-  templateUrl: './my-applications.html',
-  styleUrl: './my-applications.scss'
+  templateUrl: './contractor-panel.html',
+  styleUrl: './contractor-panel.scss',
 })
-export class MyApplications implements OnInit {
+export class ContractorPanel implements OnInit {
   applications: Application[] = [];
   loading: boolean = true;
   error: string = '';
@@ -19,12 +18,13 @@ export class MyApplications implements OnInit {
   constructor(private applicationService: ApplicationService) {}
 
   ngOnInit(): void {
-    this.loadMyApplications();
+    this.loadAllApplications();
   }
 
-  loadMyApplications(): void {
+  // Загружаем ВСЕ заявки (для подрядчика)
+  loadAllApplications(): void {
     this.loading = true;
-    this.applicationService.getMyApplications().subscribe({
+    this.applicationService.getAllApplications().subscribe({
       next: (applications) => {
         this.applications = applications;
         this.loading = false;
@@ -37,25 +37,12 @@ export class MyApplications implements OnInit {
     });
   }
 
-  // Оплатить договор (меняет ContractSent → Approved)
-  payContract(applicationId: number): void {
-    this.applicationService.updateStatus(applicationId, 'Approved').subscribe({
+  // Взять заявку в работу
+  takeToWork(applicationId: number): void {
+    this.applicationService.updateStatus(applicationId, 'InProgress').subscribe({
       next: (response) => {
-        alert('Оплата прошла успешно!');
-        this.loadMyApplications();
-      },
-      error: (error) => {
-        alert('Ошибка оплаты: ' + error.message);
-      }
-    });
-  }
-
-  // Отметить как оплачено (меняет Approved → Completed)
-  markAsPaid(applicationId: number): void {
-    this.applicationService.updateStatus(applicationId, 'Completed').subscribe({
-      next: (response) => {
-        alert('Статус обновлен на "Оплачено"!');
-        this.loadMyApplications();
+        alert('Заявка взята в работу!');
+        this.loadAllApplications();
       },
       error: (error) => {
         alert('Ошибка: ' + error.message);
@@ -63,12 +50,12 @@ export class MyApplications implements OnInit {
     });
   }
 
-  // Взять заявку в работу
-  takeToWork(applicationId: number): void {
-    this.applicationService.updateStatus(applicationId, 'InProgress').subscribe({
+  // ОТПРАВИТЬ ДОГОВОР (НОВЫЙ МЕТОД)
+  sendContract(applicationId: number): void {
+    this.applicationService.updateStatus(applicationId, 'ContractSent').subscribe({
       next: (response) => {
-        alert('Заявка взята в работу!');
-        this.loadMyApplications();
+        alert('Договор отправлен клиенту!');
+        this.loadAllApplications();
       },
       error: (error) => {
         alert('Ошибка: ' + error.message);
@@ -81,7 +68,7 @@ export class MyApplications implements OnInit {
     this.applicationService.updateStatus(applicationId, 'Completed').subscribe({
       next: (response) => {
         alert('Заявка завершена!');
-        this.loadMyApplications();
+        this.loadAllApplications();
       },
       error: (error) => {
         alert('Ошибка: ' + error.message);
@@ -89,9 +76,9 @@ export class MyApplications implements OnInit {
     });
   }
 
-  // Проверяем режим просмотра
-  isContractorView(): boolean {
-    return false;
+  // Получить заявки по статусу для статистики
+  getApplicationsByStatus(status: string): Application[] {
+    return this.applications.filter(app => app.status === status);
   }
 
   // Безопасная проверка статуса
