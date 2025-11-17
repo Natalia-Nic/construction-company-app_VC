@@ -1,7 +1,7 @@
 // src/app/components/project-list/project-list.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router'; // ← ДОБАВЬ
+import { RouterModule } from '@angular/router';
 import { ProjectService } from '../../services/project.service';
 import { ApplicationForm } from '../../components/application-form/application-form';
 import { Project } from '../../models/project.model';
@@ -9,7 +9,7 @@ import { Project } from '../../models/project.model';
 @Component({
   selector: 'app-project-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, ApplicationForm], // ← ДОБАВЬ RouterModule
+  imports: [CommonModule, RouterModule, ApplicationForm],
   templateUrl: './project-list.html',
   styleUrl: './project-list.scss'
 })
@@ -52,7 +52,7 @@ export class ProjectList implements OnInit {
 
   showDetails(project: Project): void {
     console.log('Детали проекта:', project);
-    alert(`🏠 ${project.name}\n\n📝 ${project.description}\n\n📏 Площадь: ${project.area}м²\n🛏️ Спальни: ${project.bedrooms}\n🚽 Санузлы: ${project.bathrooms}`);
+    alert(`🏠 ${project.name}\n\n📐 Площадь: ${project.area}м²\n🛏️ Спальни: ${project.bedrooms}\n🚽 Санузлы: ${project.bathrooms}`);
   }
 
   onApplicationSubmitted(): void {

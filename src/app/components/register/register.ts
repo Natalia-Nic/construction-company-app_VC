@@ -1,4 +1,3 @@
-// src/app/components/register/register.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -44,8 +43,8 @@ export class Register {
       return;
     }
 
-    if (this.registerData.password.length < 6) {
-      this.errorMessage = 'Пароль минимум 6 символов';
+    if (this.registerData.password.length < 3) {
+      this.errorMessage = 'Пароль минимум 3 символа';
       return;
     }
 
@@ -61,19 +60,24 @@ export class Register {
         
         console.error('Registration error:', error);
         
-        // Показываем реальную ошибку от сервера
-        if (error.error && error.error.errors) {
-          // Ошибки валидации Identity
-          const errorMessages = error.error.errors.map((e: any) => e.description).join(', ');
-          this.errorMessage = errorMessages;
-        } else if (error.error && typeof error.error === 'string') {
-          // Текстовая ошибка
+        // 🔥 ИСПРАВЛЕННАЯ ОБРАБОТКА ОШИБОК
+        if (error.error && typeof error.error === 'string') {
+          // Если ошибка в виде строки
           this.errorMessage = error.error;
+        } else if (error.error && Array.isArray(error.error)) {
+          // Если ошибка в виде массива
+          this.errorMessage = error.error.join(', ');
+        } else if (error.error && error.error.errors) {
+          // Если ошибки в формате Identity (объект)
+          const errorMessages = Object.values(error.error.errors).flat();
+          this.errorMessage = errorMessages.join(', ');
+        } else if (error.error && error.error.message) {
+          // Если есть message
+          this.errorMessage = error.error.message;
         } else if (error.status === 400) {
-          // Общая 400 ошибка
           this.errorMessage = 'Ошибка валидации данных';
         } else {
-          this.errorMessage = 'Ошибка регистрации';
+          this.errorMessage = 'Ошибка регистрации. Попробуйте другие данные.';
         }
       }
     });

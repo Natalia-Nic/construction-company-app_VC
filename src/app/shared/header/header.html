@@ -1,25 +1,34 @@
-<!-- src/app/shared/header/header.html -->
 <header class="header">
   <div class="container">
     <div class="header-content">
-      <!-- Логотип и название -->
       <div class="header-brand">
         <h1 class="logo">🏗️ Строительная компания</h1>
       </div>
 
-      <!-- Навигация -->
-      <nav class="header-nav">
+      <nav class="header-nav" *ngIf="currentUser">
         <a routerLink="/" class="nav-link">Главная</a>
         <a routerLink="/projects" class="nav-link">Проекты</a>
         <a routerLink="/my-applications" class="nav-link">Мои заявки</a>
-        <a routerLink="/contractor" class="nav-link">Панель подрядчика</a> <!-- ← ДОБАВИЛИ ЭТУ СТРОКУ -->
+        <a routerLink="/contractor" class="nav-link" 
+           *ngIf="currentUser.role === 'Contractor' || currentUser.role === 'Admin'">
+          Панель подрядчика
+        </a>
+        <a routerLink="/admin" class="nav-link" 
+           *ngIf="currentUser.role === 'Admin'">
+          Админ панель
+        </a>
       </nav>
 
-      <!-- Информация пользователя -->
-      <div class="user-info">
-        <span class="user-name">Иван Петров</span>
-        <span class="user-role">Клиент</span>
-        <span class="user-type">ИП</span>
+      <div class="user-info" *ngIf="currentUser">
+        <span class="user-name">{{ currentUser.fullName }}</span>
+        <span class="user-role">{{ currentUser.role }}</span>
+        <span class="user-type">{{ currentUser.phone || 'ИП' }}</span>
+        <button (click)="logout()" class="logout-btn">Выйти</button>
+      </div>
+
+      <div class="auth-links" *ngIf="!currentUser">
+        <a routerLink="/login" class="nav-link">Войти</a>
+        <a routerLink="/register" class="nav-link">Регистрация</a>
       </div>
     </div>
   </div>

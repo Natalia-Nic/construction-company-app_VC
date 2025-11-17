@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { UserService } from './user'; // Импортируем UserService, а не User
+import { UserService } from './user.service'; // Импортируем UserService, а не User
 
 describe('UserService', () => { // Измени описание
   let service: UserService; // Измени тип

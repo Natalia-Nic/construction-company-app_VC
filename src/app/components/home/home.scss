@@ -1,0 +1,294 @@
+// src/app/components/home/home.scss
+.home-page {
+  font-family: 'Arial', sans-serif;
+}
+
+/* Герой секция */
+.hero-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 80px 0;
+  display: flex;
+  align-items: center;
+  min-height: 80vh;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+}
+
+.hero-content {
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    opacity: 0.9;
+  }
+
+  .hero-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    opacity: 0.8;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+
+    .btn {
+      padding: 15px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+
+      &.btn-primary {
+        background: white;
+        color: #2c3e50;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+      }
+
+      &.btn-secondary {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+
+        &:hover {
+          background: white;
+          color: #2c3e50;
+        }
+      }
+    }
+  }
+}
+
+.hero-image {
+  text-align: center;
+
+  .hero-img {
+    max-width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+}
+
+/* Общие стили */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 60px;
+  color: #2c3e50;
+}
+
+/* Преимущества */
+.benefits-section {
+  padding: 80px 0;
+  background: #f8f9fa;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+
+.benefit-card {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-10px);
+  }
+
+  .benefit-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+  }
+
+  h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+  }
+
+  p {
+    color: #7f8c8d;
+    line-height: 1.6;
+  }
+}
+
+/* Процесс работы */
+.process-section {
+  padding: 80px 0;
+}
+
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+
+.process-step {
+  text-align: center;
+  position: relative;
+
+  .step-number {
+    width: 60px;
+    height: 60px;
+    background: #3498db;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0 auto 20px;
+  }
+
+  h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+  }
+
+  p {
+    color: #7f8c8d;
+    line-height: 1.6;
+  }
+}
+
+/* CTA секция */
+.cta-section {
+  background: #2c3e50;
+  color: white;
+  padding: 80px 0;
+  text-align: center;
+
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+  }
+
+  .btn-large {
+    background: #3498db;
+    color: white;
+    padding: 20px 40px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #2980b9;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+/* Контакты */
+.contacts-section {
+  padding: 80px 0;
+  background: #f8f9fa;
+}
+
+.contacts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 30px;
+
+  .contact-icon {
+    font-size: 2rem;
+  }
+
+  h3 {
+    color: #2c3e50;
+    margin-bottom: 5px;
+  }
+
+  p {
+    color: #7f8c8d;
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+.map-placeholder {
+  .map {
+    background: #e9ecef;
+    height: 300px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7f8c8d;
+    font-size: 1.1rem;
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .hero-section .container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: 2.5rem !important;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contacts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .benefits-grid,
+  .process-steps {
+    grid-template-columns: 1fr;
+  }
+}

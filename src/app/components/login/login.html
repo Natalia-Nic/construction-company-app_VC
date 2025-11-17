@@ -1,75 +1,60 @@
-<<!-- src/app/components/login/login.html -->
+<!-- src/app/components/login/login.html -->
 <div class="login-container">
-  <div class="login-card">
-    <!-- Заголовок -->
-    <div class="login-header">
-      <h1>Вход в систему</h1>
-      <p>Войдите в свой аккаунт</p>
+  <h2>Вход в систему</h2>
+  <p>Войдите в свой аккаунт</p>
+
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <div class="form-group">
+      <label>Email</label>
+      <input 
+        type="email" 
+        name="email"
+        [(ngModel)]="loginData.email"
+        required
+        placeholder="Введите email">
     </div>
 
-    <!-- Форма входа -->
-    <form (ngSubmit)="onSubmit()" class="login-form">
-      
-      <!-- Поле Email -->
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          [(ngModel)]="loginData.email"
-          name="email"
-          placeholder="Введите ваш email"
-          required
-          class="form-input"
-        >
-      </div>
+    <div class="form-group">
+      <label>Пароль</label>
+      <input 
+        type="password" 
+        name="password"
+        [(ngModel)]="loginData.password"
+        required
+        placeholder="Введите пароль">
+    </div>
 
-      <!-- Поле Пароль -->
-      <div class="form-group">
-        <label for="password">Пароль</label>
-        <input
-          type="password"
-          id="password"
-          [(ngModel)]="loginData.password"
-          name="password"
-          placeholder="Введите ваш пароль"
-          required
-          class="form-input"
-        >
-      </div>
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
 
-      <!-- Сообщение об ошибке -->
-      <div *ngIf="errorMessage" class="error-message">
-        {{ errorMessage }}
-      </div>
+    <button 
+      type="submit" 
+      class="btn-primary"
+      [disabled]="isLoading">
+      {{ isLoading ? 'Вход...' : 'Войти' }}
+    </button>
+  </form>
 
-      <!-- Кнопка входа -->
-      <button 
-        type="submit" 
-        class="btn btn-primary btn-login"
-        [disabled]="isLoading"
-      >
-        <span *ngIf="!isLoading">Войти</span>
-        <span *ngIf="isLoading">Вход...</span>
+  <p class="register-link">
+    Нет аккаунта? <a routerLink="/register">Зарегистрироваться</a>
+  </p>
+
+  <div class="quick-login">
+    <h3>🚀 Быстрый вход для тестирования</h3>
+    <p><strong>Пароль: 123</strong></p>
+    
+    <div class="quick-buttons">
+      <button (click)="quickLogin('user1')" class="btn-secondary">
+        👤 Наталья1 (ssd@bfa)
       </button>
-
-      <!-- Ссылка на регистрацию -->
-      <div class="login-footer">
-        <p>Нет аккаунта? <a routerLink="/register" class="link">Зарегистрироваться</a></p>
-      </div>
-
-      <!-- Быстрый вход для тестирования (можно удалить) -->
-      <div class="quick-login">
-        <p>Быстрый вход для тестирования:</p>
-        <div class="quick-buttons">
-          <button type="button" (click)="quickLogin('client')" class="btn btn-secondary btn-sm">
-            Клиент
-          </button>
-          <button type="button" (click)="quickLogin('contractor')" class="btn btn-secondary btn-sm">
-            Подрядчик
-          </button>
-        </div>
-      </div>
-    </form>
+      <button (click)="quickLogin('user2')" class="btn-secondary">
+        👷 Наталья (dffgh@jl)
+      </button>
+      <button (click)="quickLogin('user3')" class="btn-secondary">
+        👤 Тест Пользователь (test@test.com)
+      </button>
+    </div>
+    <p><em>* Для всех пользователей пароль: 123</em></p>
   </div>
 </div>

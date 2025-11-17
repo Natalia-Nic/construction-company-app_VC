@@ -1,0 +1,132 @@
+<!-- src/app/components/home/home.html -->
+<div class="home-page">
+  <!-- Герой секция -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Строительная компания "Альфа"</h1>
+      <p class="hero-subtitle">Строим дома вашей мечты с 2010 года</p>
+      <p class="hero-description">
+        Более 500 реализованных проектов по всей России. 
+        Индивидуальный подход, гарантия качества и полный цикл работ.
+      </p>
+      <div class="hero-actions">
+        <a routerLink="/projects" class="btn btn-primary">Смотреть проекты</a>
+        <a href="#contacts" class="btn btn-secondary">Контакты</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <img src="/assets/hero-house.jpg" alt="Современный дом" class="hero-img">
+    </div>
+  </section>
+
+  <!-- Преимущества -->
+  <section class="benefits-section">
+    <div class="container">
+      <h2 class="section-title">Почему выбирают нас</h2>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">🏗️</div>
+          <h3>14 лет опыта</h3>
+          <p>Работаем на рынке с 2010 года. Знаем все тонкости строительства</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">🏠</div>
+          <h3>500+ проектов</h3>
+          <p>Реализовали более 500 успешных строительных проектов</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">⭐</div>
+          <h3>Гарантия 10 лет</h3>
+          <p>Даем расширенную гарантию на все построенные объекты</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-icon">💰</div>
+          <h3>Рассрочка 0%</h3>
+          <p>Предоставляем беспроцентную рассрочку на строительство</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Как мы работаем -->
+  <section class="process-section">
+    <div class="container">
+      <h2 class="section-title">Как мы работаем</h2>
+      <div class="process-steps">
+        <div class="process-step">
+          <div class="step-number">1</div>
+          <h3>Консультация</h3>
+          <p>Бесплатная консультация и подбор проекта по вашим требованиям</p>
+        </div>
+        <div class="process-step">
+          <div class="step-number">2</div>
+          <h3>Проектирование</h3>
+          <p>Разработка индивидуального проекта с учетом всех пожеланий</p>
+        </div>
+        <div class="process-step">
+          <div class="step-number">3</div>
+          <h3>Строительство</h3>
+          <p>Качественное строительство с соблюдением всех сроков</p>
+        </div>
+        <div class="process-step">
+          <div class="step-number">4</div>
+          <h3>Сдача объекта</h3>
+          <p>Полная сдача объекта "под ключ" с гарантийным обслуживанием</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA секция -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Готовы начать строительство?</h2>
+      <p>Оставьте заявку и получите бесплатную консультацию нашего специалиста</p>
+      <a routerLink="/projects" class="btn btn-large">Начать проект</a>
+    </div>
+  </section>
+
+  <!-- Контакты -->
+  <section id="contacts" class="contacts-section">
+    <div class="container">
+      <h2 class="section-title">Контакты</h2>
+      <div class="contacts-grid">
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <h3>Адрес</h3>
+              <p>г. Москва, ул. Строителей, д. 15</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <h3>Телефон</h3>
+              <p>+7 (495) 123-45-67</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <h3>Email</h3>
+              <p>info@alpha-construction.ru</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🕒</div>
+            <div>
+              <h3>Режим работы</h3>
+              <p>Пн-Пт: 9:00-18:00<br>Сб: 10:00-16:00</p>
+            </div>
+          </div>
+        </div>
+        <div class="map-placeholder">
+          <div class="map">
+            <p>🗺️ Карта будет здесь</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

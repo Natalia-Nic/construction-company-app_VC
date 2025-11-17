@@ -1,53 +1,55 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
-import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-admin-panel',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './admin-panel.html',
-  styleUrl: './admin-panel.scss',
+  styleUrls: ['./admin-panel.scss']
 })
 export class AdminPanel implements OnInit {
-  users: User[] = [];
-  loading: boolean = true;
-  error: string = '';
+  users: any[] = [];
+  applications: any[] = [];
+  projects: any[] = [];
+  loading = false;
 
   constructor(private userService: UserService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadUsers();
+    this.loadMockData();
   }
 
-  loadUsers(): void {
+  loadUsers() {
     this.loading = true;
-    this.userService.getAllUsers().subscribe({
-      next: (users) => {
-        this.users = users;
-        this.loading = false;
-      },
-      error: (error) => {
-        this.error = 'Ошибка загрузки пользователей';
-        this.loading = false;
-        console.error('Error loading users:', error);
-      }
+    this.userService.getAllUsers().subscribe(users => {
+      this.users = users;
+      this.loading = false;
     });
   }
 
-  changeUserRole(userId: string, newRole: string): void {
-    this.userService.updateUserRole(userId, newRole).subscribe({
-      next: (response) => {
-        alert('Роль пользователя обновлена!');
+  loadMockData() {
+    this.applications = [{id: 1}, {id: 2}, {id: 3}];
+    this.projects = [{id: 1}, {id: 2}, {id: 3}];
+  }
+
+  changeUserRole(userId: string, role: string) {
+    const validRole = role as 'Admin' | 'Client' | 'Contractor';
+    this.userService.changeUserRole(userId, validRole).subscribe({
+      next: () => {
         this.loadUsers();
+        alert('Роль изменена!');
       },
-      error: (error) => {
-        alert('Ошибка обновления роли: ' + error.message);
+      error: (err) => {
+        console.error('Error:', err);
+        alert('Ошибка изменения роли');
       }
     });
   }
 
-  formatDate(date: string | Date): string {
+  formatDate(date: string) {
     return new Date(date).toLocaleDateString('ru-RU');
   }
 }

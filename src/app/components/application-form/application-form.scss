@@ -1,4 +1,6 @@
-// src/app/components/application-form/application-form.scss
+@use '../../../styles/variables' as vars;
+@use '../../../styles/mixins' as mixins;
+
 .application-form-overlay {
   position: fixed;
   top: 0;
@@ -25,7 +27,7 @@
 
 .form-header {
   display: flex;
-  justify-content: between;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
   border-bottom: 1px solid #e0e0e0;

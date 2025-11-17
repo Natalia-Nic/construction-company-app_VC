@@ -1,3 +1,5 @@
+@use '../../../styles/variables' as vars;
+@use '../../../styles/mixins' as mixins;
 // contractor-panel.scss
 .contractor-panel {
   padding: 20px 0;

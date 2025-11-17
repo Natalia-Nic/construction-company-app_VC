@@ -1,4 +1,3 @@
-<!-- src/app/components/register/register.html -->
 <div class="register-container">
   <div class="register-card">
     <div class="register-header">
@@ -49,11 +48,11 @@
       <div class="form-group">
         <label for="password">Пароль</label>
         <input
-          type="password"
+          type="text"
           id="password"
           [(ngModel)]="registerData.password"
           name="password"
-          placeholder="Минимум 6 символов"
+          placeholder="Минимум 3 символа"
           required
           class="form-input"
         >
@@ -62,7 +61,7 @@
       <div class="form-group">
         <label for="confirmPassword">Подтвердите пароль</label>
         <input
-          type="password"
+          type="text"
           id="confirmPassword"
           [(ngModel)]="confirmPassword"
           name="confirmPassword"
